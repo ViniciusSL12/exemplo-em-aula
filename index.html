@@ -1,0 +1,145 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f6f2">
+    <meta name="description" content="Um espaço simples e cuidadoso para organizar suas tarefas do dia.">
+    <title>Passo a passo | Sua lista de tarefas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="page-shell">
+        <header class="topbar">
+            <a class="brand" href="#inicio" aria-label="Passo a passo, início">
+                <span class="brand-mark" aria-hidden="true">p.</span>
+                <span class="brand-name">passo<span>a</span>passo</span>
+            </a>
+            <div class="today-block">
+                <span class="save-indicator" aria-hidden="true"></span>
+                <span id="save-status">Salvo neste navegador</span>
+                <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar modo noturno" aria-pressed="false" title="Ativar modo noturno">
+                    <span class="theme-icon theme-icon-moon" aria-hidden="true">☾</span>
+                    <span class="theme-icon theme-icon-sun" aria-hidden="true">☼</span>
+                </button>
+                <span class="topbar-divider" aria-hidden="true"></span>
+                <time id="today-label"></time>
+            </div>
+        </header>
+
+        <section class="welcome" id="inicio" aria-labelledby="page-title">
+            <div>
+                <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> SEU ESPAÇO, SEU RITMO</p>
+                <h1 id="page-title">Organize o hoje.<br><span>Um passo de cada vez.</span></h1>
+                <p class="welcome-copy">Tire as ideias da cabeça e dê atenção ao que importa.</p>
+            </div>
+            <div class="welcome-note" aria-label="Lembrete">
+                <span class="note-mark" aria-hidden="true">“</span>
+                <p>Progresso é feito<br>de pequenos começos.</p>
+                <span class="note-caption">UM DIA DE CADA VEZ</span>
+            </div>
+        </section>
+
+        <main class="workspace">
+            <aside class="sidebar" aria-label="Navegação da lista">
+                <p class="section-label">MINHAS TAREFAS</p>
+                <nav class="filter-list" aria-label="Filtrar tarefas" role="group">
+                    <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">
+                        <span class="filter-name"><span class="filter-symbol symbol-all" aria-hidden="true"></span>Todas</span>
+                        <span class="filter-count" data-count="all">0</span>
+                    </button>
+                    <button class="filter-button" type="button" data-filter="active" aria-pressed="false">
+                        <span class="filter-name"><span class="filter-symbol symbol-active" aria-hidden="true"></span>Em aberto</span>
+                        <span class="filter-count" data-count="active">0</span>
+                    </button>
+                    <button class="filter-button" type="button" data-filter="completed" aria-pressed="false">
+                        <span class="filter-name"><span class="filter-symbol symbol-completed" aria-hidden="true"></span>Concluídas</span>
+                        <span class="filter-count" data-count="completed">0</span>
+                    </button>
+                </nav>
+                <div class="sidebar-tip">
+                    <span class="tip-line" aria-hidden="true"></span>
+                    <p>Uma lista possível é melhor do que uma lista perfeita.</p>
+                </div>
+            </aside>
+
+            <section class="task-section" aria-labelledby="tasks-heading">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-label">SEU PLANEJAMENTO</p>
+                        <h2 id="tasks-heading">Tarefas <span id="open-count" class="heading-count">0 em aberto</span></h2>
+                    </div>
+                </div>
+
+                <form class="task-form" id="task-form">
+                    <label class="visually-hidden" for="task-title">Nome da tarefa</label>
+                    <input id="task-title" name="title" type="text" maxlength="120" placeholder="O que você precisa fazer?" autocomplete="off" required>
+                    <div class="form-options">
+                        <label class="form-control date-control">
+                            <span class="control-label">PRAZO</span>
+                            <input name="dueDate" type="date" aria-label="Prazo da tarefa">
+                        </label>
+                        <label class="form-control priority-control">
+                            <span class="control-label">PRIORIDADE</span>
+                            <select name="priority" aria-label="Prioridade da tarefa">
+                                <option value="low">Baixa</option>
+                                <option value="medium" selected>Média</option>
+                                <option value="high">Alta</option>
+                            </select>
+                        </label>
+                        <button class="add-button" type="submit"><span aria-hidden="true">+</span> Adicionar</button>
+                    </div>
+                </form>
+
+                <div class="list-toolbar">
+                    <label class="search-box">
+                        <span class="search-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Buscar tarefas</span>
+                        <input id="task-search" type="search" placeholder="Buscar tarefa..." autocomplete="off">
+                        <kbd aria-hidden="true">/</kbd>
+                    </label>
+                    <button class="clear-button" id="clear-completed" type="button" hidden>Limpar concluídas</button>
+                </div>
+
+                <ul class="task-list" id="task-list" aria-label="Lista de tarefas"></ul>
+                <div class="empty-state" id="empty-state" hidden>
+                    <span class="empty-mark" aria-hidden="true">✳</span>
+                    <h3 id="empty-title">Tudo começa com uma ideia.</h3>
+                    <p id="empty-description">Adicione sua primeira tarefa e ela aparecerá aqui.</p>
+                </div>
+                <p class="task-hint"><span class="hint-dot" aria-hidden="true"></span> Suas tarefas ficam salvas neste dispositivo.</p>
+            </section>
+
+            <aside class="overview" aria-labelledby="overview-heading">
+                <div class="overview-card">
+                    <p class="section-label">VISÃO GERAL</p>
+                    <h2 id="overview-heading">Seu ritmo</h2>
+                    <p class="overview-description">Cada tarefa concluída conta.</p>
+                    <div class="progress-heading"><span>Progresso</span><span id="progress-percent">0%</span></div>
+                    <div class="progress-track" id="progress-track" role="progressbar" aria-label="Tarefas concluídas" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <span class="progress-fill" id="progress-fill"></span>
+                    </div>
+                    <div class="overview-stats">
+                        <div class="stat-row"><span><span class="stat-dot dot-open" aria-hidden="true"></span>Em aberto</span><strong id="overview-open">0</strong></div>
+                        <div class="stat-row"><span><span class="stat-dot dot-done" aria-hidden="true"></span>Concluídas</span><strong id="overview-completed">0</strong></div>
+                    </div>
+                </div>
+                <p class="overview-footnote">Feito com calma também é feito.</p>
+            </aside>
+        </main>
+
+        <footer class="page-footer">
+            <span>PASSO A PASSO</span>
+            <span>Seu espaço para focar no que importa.</span>
+        </footer>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+</body>
+</html>
+```
